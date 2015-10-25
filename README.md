@@ -25,6 +25,7 @@ with the option of selecting manually if detection fails
 * Export to other devices
 * Spending history
 
+
 <!-- \clearpage -->
 
 
@@ -42,9 +43,20 @@ Clicking "add receipt" will open the camera and allow the user to that a picture
 
 <!-- \clearpage -->
 
+
+
+## Screen Mockups
+
+
+![Image of the main screen](README_images/MainScreen.png) ![Image of the category form ](README_images/CategoryForm.png)
+
+<!-- \clearpage -->
+
 ## Database description
 
+<center>
 ![Image of database tables](README_images/PersonalAccountant.png)
+</center>
 
 The database is composed of three tables:
 
@@ -56,7 +68,7 @@ The database is composed of three tables:
 
 ## Use Case
 
-![Image of the project usecase](README_images/UseCase.png)
+![Image of the project usecase](README_images/UseCase.png){#fig:thing}
 
 A user can:
 
