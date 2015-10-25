@@ -54,9 +54,7 @@ Clicking "add receipt" will open the camera and allow the user to that a picture
 
 ## Database description
 
-<center>
-![Image of database tables](README_images/PersonalAccountant.png)
-</center>
+![Image of database tables](README_images/PersonalAccountant.png | test)
 
 The database is composed of three tables:
 
