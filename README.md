@@ -1,9 +1,3 @@
-<style>
-  img {
-    text-align: center;
-  }
-</style>
-
 # PersonalAccountant
 **_Mobile Development Project_** - André Barata DT228/3
 
