@@ -26,7 +26,7 @@ with the option of selecting manually if detection fails
 * Spending history
 
 
-<!c \clearpage -->
+<!--c \clearpage -->
 
 
 ## App Flow
@@ -41,7 +41,7 @@ Clicking "add category" will send the user to a form with inputs to pick the cat
 
 Clicking "add receipt" will open the camera and allow the user to that a picture of the receipt. It will also have an input to manual enter the total cost.
 
-<!c \clearpage -->
+<!--c \clearpage -->
 
 ## Screen Mockups
 
@@ -49,7 +49,7 @@ __MainScreen__ | __CategoryForm__ | __ViewCategory__ |
 ---------------|------------------|------------------|
 ![Image of the main screen](README_images/MainScreen.png) | ![Image of the category form](README_images/CategoryForm.png) | ![Image of the category view](README_images/ViewCategory.png)
 
-<!c \clearpage -->
+<!--c \clearpage -->
 
 ## Database description
 
@@ -62,7 +62,7 @@ The database is composed of three tables:
 * SpendingHistory
 * Receipt
 
-<!c \clearpage  -->
+<!--c \clearpage  -->
 
 ## Use Case
 
@@ -76,4 +76,4 @@ A user can:
 * Add receipts
 * And Remove Receipts
 
-<!c \clearpage -->
+<!--c \clearpage -->
