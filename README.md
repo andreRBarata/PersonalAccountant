@@ -54,7 +54,7 @@ __MainScreen__ | __CategoryForm__ | __ViewCategory__
 
 __AddReceipt__ | __ViewReceipt__ | __OldReceipts__
 ---------------|-----------------|----------------
-![Image of the main screen](README_images/AddReceipt.png) | ![Image of the main screen](README_images/ViewReceipt.png) | ![Image of the main screen](README_images/AddReceipt.png)
+![Image of the main screen](README_images/AddReceipt.png) | ![Image of the main screen](README_images/ViewReceipt.png) | ![Image of the main screen](README_images/OldReceipts.png)
 
 <!--c \clearpage -->
 
