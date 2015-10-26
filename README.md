@@ -26,12 +26,12 @@ with the option of selecting manually if detection fails
 * Spending history
 
 
-<!-- \clearpage -->
+<!c \clearpage -->
 
 
 ## App Flow
 
-![Image of the project screen flow](README_images/AppFlow.png)
+![Image of the project screen flow](README_images/AppFlow.png)<c #fig:appflow>
 
 The app starts in a list of categories (mainpage), the list contains the name, budget total and budget spent of the category. This screen also has two buttons: Add category and add receipt.
 
@@ -41,20 +41,20 @@ Clicking "add category" will send the user to a form with inputs to pick the cat
 
 Clicking "add receipt" will open the camera and allow the user to that a picture of the receipt. It will also have an input to manual enter the total cost.
 
-<!-- \clearpage -->
-
-
+<!c \clearpage -->
 
 ## Screen Mockups
 
+__MainScreen__ | __CategoryForm__ | __ViewCategory__ |
+---------------|------------------|------------------|
+![Image of the main screen](README_images/MainScreen.png) | ![Image of the category form](README_images/CategoryForm.png) | ![Image of the category view](README_images/ViewCategory.png)
 
-![Image of the main screen](README_images/MainScreen.png) ![Image of the category form ](README_images/CategoryForm.png)
-
-<!-- \clearpage -->
+<!c \clearpage -->
 
 ## Database description
 
-![Image of database tables](README_images/PersonalAccountant.png | test)
+![Image of database tables](README_images/PersonalAccountant.png)<c #fig:tables>
+
 
 The database is composed of three tables:
 
@@ -62,11 +62,11 @@ The database is composed of three tables:
 * SpendingHistory
 * Receipt
 
-<!-- \clearpage  -->
+<!c \clearpage  -->
 
 ## Use Case
 
-![Image of the project usecase](README_images/UseCase.png){#fig:thing}
+![Image of the project usecase](README_images/UseCase.png)<c #fig:usecase>
 
 A user can:
 
@@ -76,4 +76,4 @@ A user can:
 * Add receipts
 * And Remove Receipts
 
-<!-- \clearpage -->
+<!c \clearpage -->
