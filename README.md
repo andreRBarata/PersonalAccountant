@@ -2,6 +2,9 @@
 **_Mobile Development Project_** - André Barata DT228/3
 
 
+<!--c **Project github:** github.com/andreRBarata/PersonalAccountant -->
+
+
 ## About
 PersonalAccountant has the objective of making keeping track of your personal spending easier.
 
@@ -45,15 +48,19 @@ Clicking "add receipt" will open the camera and allow the user to that a picture
 
 ## Screen Mockups
 
-__MainScreen__ | __CategoryForm__ | __ViewCategory__ |
----------------|------------------|------------------|
+__MainScreen__ | __CategoryForm__ | __ViewCategory__
+---------------|------------------|------------------
 ![Image of the main screen](README_images/MainScreen.png) | ![Image of the category form](README_images/CategoryForm.png) | ![Image of the category view](README_images/ViewCategory.png)
+
+__AddReceipt__ | __ViewReceipt__ | __OldReceipts__
+---------------|-----------------|----------------
+![Image of the main screen](README_images/AddReceipt.png) | ![Image of the main screen](README_images/ViewReceipt.png) | ![Image of the main screen](README_images/AddReceipt.png)
 
 <!--c \clearpage -->
 
 ## Database description
 
-![Image of database tables](README_images/PersonalAccountant.png)<c #fig:tables>
+![Diagram of database tables](README_images/PersonalAccountant.png)<c #fig:tables>
 
 
 The database is composed of three tables:
@@ -66,7 +73,7 @@ The database is composed of three tables:
 
 ## Use Case
 
-![Image of the project usecase](README_images/UseCase.png)<c #fig:usecase>
+![Project usecase](README_images/UseCase.png)<c #fig:usecase>
 
 A user can:
 
