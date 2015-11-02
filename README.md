@@ -1,7 +1,6 @@
 # PersonalAccountant
 **_Mobile Development Project_** - André Barata DT228/3
 
-
 <!--c **Project github:** github.com/andreRBarata/PersonalAccountant -->
 
 
@@ -18,7 +17,6 @@ These records will stored locally lowering the probability of data theft.
 
 ---
 
-
 **Planned features include:**
 
 * Automatic detection of total cost in receipts
@@ -29,12 +27,9 @@ with the option of selecting manually if detection fails
 * Spending history
 
 
-<!--c \clearpage -->
-
-
 ## App Flow
 
-![Image of the project screen flow](README_images/AppFlow.png)<c #fig:appflow>
+![Image of the project screen flow](README_images/AppFlow.png)
 
 The app starts in a list of categories (mainpage), the list contains the name, budget total and budget spent of the category. This screen also has two buttons: Add category and add receipt.
 
@@ -44,7 +39,6 @@ Clicking "add category" will send the user to a form with inputs to pick the cat
 
 Clicking "add receipt" will open the camera and allow the user to that a picture of the receipt. It will also have an input to manual enter the total cost.
 
-<!--c \clearpage -->
 
 ## Screen Mockups
 
@@ -56,12 +50,11 @@ __AddReceipt__ | __ViewReceipt__ | __OldReceipts__
 ---------------|-----------------|----------------
 ![Image of the main screen](README_images/AddReceipt.png) | ![Image of the main screen](README_images/ViewReceipt.png) | ![Image of the main screen](README_images/OldReceipts.png)
 
-<!--c \clearpage -->
+<bp/>
 
 ## Database description
 
-![Diagram of database tables](README_images/PersonalAccountant.png)<c #fig:tables>
-
+![Diagram of database tables](README_images/PersonalAccountant.png)
 
 The database is composed of three tables:
 
@@ -69,11 +62,11 @@ The database is composed of three tables:
 * SpendingHistory
 * Receipt
 
-<!--c \clearpage  -->
+<bp/>
 
 ## Use Case
 
-![Project usecase](README_images/UseCase.png)<c #fig:usecase>
+![Project usecase](README_images/UseCase.png)
 
 A user can:
 
@@ -82,5 +75,3 @@ A user can:
 * Edit Categories
 * Add receipts
 * And Remove Receipts
-
-<!--c \clearpage -->
