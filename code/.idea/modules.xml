@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/PersonalAccountant.iml" filepath="$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/PersonalAccountant.iml" />
-      <module fileurl="file://$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/app/app.iml" filepath="$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/app/app.iml" />
+      <module fileurl="file://$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/app/app.iml" filepath="$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/app/app.iml" />
+      <module fileurl="file://$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/code.iml" filepath="$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/code.iml" />
     </modules>
   </component>
 </project>

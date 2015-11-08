@@ -9,8 +9,8 @@
         <option name="gradleJvm" value="1.7" />
         <option name="modules">
           <set>
-            <option value="$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant" />
-            <option value="$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/app" />
+            <option value="$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code" />
+            <option value="$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/app" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -1,0 +1,1 @@
+/home/andre/Documentos/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/app/src/main/res/raw/database.sql
