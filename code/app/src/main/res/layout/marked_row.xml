@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:columnCount="2"
+    android:rowCount="1"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="30px"
+    android:layout_margin="0px">
+    <TextView
+        android:layout_rowSpan="1"
+        android:layout_column="0"
+        android:id="@+id/text"/>
+    <TextView
+        android:layout_rowSpan="1"
+        android:layout_column="1"
+        android:id="@+id/mark" />
+</GridLayout>

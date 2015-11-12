@@ -24,7 +24,12 @@ import java.util.Scanner;
 
 /**
  * Created by andre on 29-10-2015.
+ *
+ * Database connector
+ *
+ * Creates and gives access to the app database
  */
+
 public class DBManager {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "PersonalAccountant";
@@ -60,12 +65,7 @@ public class DBManager {
                     commands = new StringBuilder();
                 }
             }
-
         }
-
-        /*public Cursor select(String table, String[] columns, Map parameters) {
-            db.query(table, columns )
-        }*/
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -83,4 +83,41 @@ public class DBManager {
         DBHelper.close();
     }
 
+    /*
+    * Select table query
+    * params cheat sheet:
+    * params[0] - where clause
+    * params[1] - where parameters (string seperated by comas)
+    * params[2] - group by
+    * params[3] - having
+    * params[4] - order by
+    */
+    public Cursor select(String table, String[] columns, String... params) {
+
+        Cursor cursor = db.query(table, columns,
+                (params.length > 0)? params[0]: null,
+                (params.length > 1)? params[1].split(","): null,
+                (params.length > 2)? params[2]: null,
+                (params.length > 3)? params[3]: null,
+                (params.length > 4)? params[4]: null
+        );
+
+        cursor.moveToFirst();
+
+        return cursor;
+    }
+
+    /*public Cursor select(String table, String[] columns, Map<String,String> parameters) {
+        String where;
+
+        if (parameters.containsKey("where")) {
+            where = parameters.get("where").replaceAll("([.*?]*=[ ]*)(.+?)(([ ]*)(and|or|AND|OR|\\n))","$1?$3");
+        }
+
+        db.query(table, columns,
+                parameters.get("where"),
+                parameters.get("where"),
+
+        );
+    }*/
 }
