@@ -12,12 +12,22 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
-    <FrameLayout
+    <GridLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="1"
+        android:orientation="vertical"
         android:layout_alignParentBottom="true">
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </FrameLayout>
+            android:text="@string/add_receipt"
+            android:layout_rowSpan="1"
+            android:layout_column="0"
+            android:id="@+id/add_receipt"/>
+        <Button
+            android:text="@string/add_receipt"
+            android:layout_rowSpan="1"
+            android:layout_column="1"
+            android:id="@+id/add_category"/>
+    </GridLayout>
 </RelativeLayout>

@@ -1,36 +1,38 @@
 package com.baratagmail.quina.andre.personalaccountant;
 
-import android.app.Activity;
-import android.app.ListActivity;
+
+import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
+import com.baratagmail.quina.andre.personalaccountant.components.FormPair;
 import com.baratagmail.quina.andre.personalaccountant.components.MarkedListAdaptor;
 import com.baratagmail.quina.andre.personalaccountant.database.DBManager;
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.io.File;
 
-public class Main extends AppCompatActivity {
+
+public class Main extends AppCompatActivity implements View.OnClickListener {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_categories);
         super.setTitle("Categories");
+
         ListView list = (ListView)findViewById(R.id.categories);
+        Button addReceipt = (Button)findViewById(R.id.add_receipt);
 
 
-
+        //Adding categories to the list
         MarkedListAdaptor categories =
                 new MarkedListAdaptor(
                         list.getContext()
@@ -45,10 +47,11 @@ public class Main extends AppCompatActivity {
         while (!cursor.isAfterLast()) {
             Log.d("db", cursor.getString(0));
             categories.add(
-                new String[]{
-                        cursor.getString(0),
-                        "€" + cursor.getFloat(1)
-                }
+                new FormPair(
+                        "label", cursor.getString(0),
+                        "budget", ("€" + cursor.getFloat(1)),
+                        "usage", "testetestestes"
+                )
             );
 
             cursor.moveToNext();
@@ -57,6 +60,11 @@ public class Main extends AppCompatActivity {
         list.setAdapter(categories);
 
         db.close();
+
+        //Setting action of clicking addReceipt
+        addReceipt.setOnClickListener(
+            this
+        );
     }
 
     @Override
@@ -79,5 +87,12 @@ public class Main extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(this, Receipt.class);
+
+        startActivity(intent);
     }
 }

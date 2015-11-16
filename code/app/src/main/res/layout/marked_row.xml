@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:columnCount="2"
-    android:rowCount="1"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="30px"
-    android:layout_margin="0px">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
     <TextView
-        android:layout_rowSpan="1"
-        android:layout_column="0"
-        android:id="@+id/text"/>
-    <TextView
-        android:layout_rowSpan="1"
-        android:layout_column="1"
-        android:id="@+id/mark" />
-</GridLayout>
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/text"
+        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true">
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/budget"
+            />
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/usage"
+            android:layout_below="@+id/budget"
+            android:layout_marginTop="5dp"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>
