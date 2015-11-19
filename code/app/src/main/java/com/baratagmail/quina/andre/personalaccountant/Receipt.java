@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
 import com.baratagmail.quina.andre.personalaccountant.components.FormPair;
 import com.baratagmail.quina.andre.personalaccountant.database.DBManager;
 
@@ -73,25 +75,45 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
 
     public void onClick(View v) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        TextView pathView = (TextView) findViewById(R.id.receipt_path);
+
 
         File file = new File(
                 receiptsDir,
                 (System.currentTimeMillis()) + ".jpg"
         );
-
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file)); // set the image file name
-        // start the image capture Intent
 
+        if (pathView.getText() != "") {
+            Log.d("log","teste");
+            File old = new File(pathView.getText().toString());
+            old.delete();
+        }
+
+        pathView.setText(file.getAbsolutePath()); //Add file path to "Form"
+
+
+        // start the image capture Intent
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        final ImageView receipt = (ImageView)findViewById(R.id.receipt);
+        super.onActivityResult(requestCode, resultCode, data);
 
-        receipt.setImageBitmap(BitmapFactory.decodeFile(
-                receiptsDir + File.separator + "aname.jpg"
-            )
-        );
-        Log.d("log", "log");
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+            final ImageView receipt = (ImageView) findViewById(R.id.receipt);
+            TextView pathView = (TextView) findViewById(R.id.receipt_path);
+
+            if (resultCode == RESULT_OK) {
+
+                receipt.setImageBitmap(BitmapFactory.decodeFile(
+                                pathView.getText().toString()
+                        )
+                );
+            }
+            else {
+                pathView.setText("");
+            }
+        }
     }
 }
