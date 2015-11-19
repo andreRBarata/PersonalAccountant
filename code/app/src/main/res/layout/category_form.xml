@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/name"
+        android:id="@+id/category_name"/>
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/budget"
+        android:id="@+id/category_budget"
+        android:inputType="numberDecimal"
+        android:layout_below="@id/category_name"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/counting_period"
+        android:layout_below="@+id/category_budget"
+        />
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+    </Spinner>
+    <GridLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="1"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/bottombar_padding">
+        <Button
+            android:text="@string/save"
+            android:layout_rowSpan="1"
+            android:layout_column="0"
+            android:id="@+id/save"/>
+        <Button
+            android:text="@string/delete"
+            android:layout_rowSpan="1"
+            android:layout_column="1"
+            android:id="@+id/delete"/>
+    </GridLayout>
+</RelativeLayout>

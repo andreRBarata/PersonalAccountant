@@ -6,4 +6,10 @@
     <string name="category">Category</string>
     <string name="receipt">Receipt</string>
     <string name="add_receipt">Add Receipt</string>
+    <string name="add_category">Add Category</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="name">Name</string>
+    <string name="budget">Budget</string>
+    <string name="counting_period">Counting Period</string>
 </resources>

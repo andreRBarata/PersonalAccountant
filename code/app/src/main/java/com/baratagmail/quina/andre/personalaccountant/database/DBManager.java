@@ -14,11 +14,6 @@ import android.util.Log;
 
 import com.baratagmail.quina.andre.personalaccountant.R;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
 import java.util.Scanner;
 
 
@@ -106,18 +101,4 @@ public class DBManager {
 
         return cursor;
     }
-
-    /*public Cursor select(String table, String[] columns, Map<String,String> parameters) {
-        String where;
-
-        if (parameters.containsKey("where")) {
-            where = parameters.get("where").replaceAll("([.*?]*=[ ]*)(.+?)(([ ]*)(and|or|AND|OR|\\n))","$1?$3");
-        }
-
-        db.query(table, columns,
-                parameters.get("where"),
-                parameters.get("where"),
-
-        );
-    }*/
 }

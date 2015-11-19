@@ -22,6 +22,10 @@
             android:name=".Receipt"
             android:label="@string/receipt" >
         </activity>
+        <activity
+            android:name=".CategoryForm"
+            android:label="@string/category" >
+        </activity>
     </application>
 
 </manifest>

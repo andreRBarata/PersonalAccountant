@@ -4,10 +4,12 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:padding="10dp">
+
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:id="@+id/text"
+        android:textSize="@dimen/list_font"
         android:layout_gravity="center_vertical"
         android:layout_centerVertical="true"/>
     <RelativeLayout
@@ -18,11 +20,13 @@
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:textSize="@dimen/list_sub_font"
             android:id="@+id/budget"
             />
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:textSize="@dimen/list_sub_font"
             android:id="@+id/usage"
             android:layout_below="@+id/budget"
             android:layout_marginTop="5dp"

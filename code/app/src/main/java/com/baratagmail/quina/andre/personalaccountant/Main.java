@@ -30,6 +30,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         ListView list = (ListView)findViewById(R.id.categories);
         Button addReceipt = (Button)findViewById(R.id.add_receipt);
+        Button addCategory = (Button)findViewById(R.id.add_category);
 
 
         //Adding categories to the list
@@ -61,8 +62,11 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         db.close();
 
-        //Setting action of clicking addReceipt
+        //Setting action of clicking addReceipt and addCategory
         addReceipt.setOnClickListener(
+            this
+        );
+        addCategory.setOnClickListener(
             this
         );
     }
@@ -91,8 +95,17 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(this, Receipt.class);
+        Intent intent = null;
 
-        startActivity(intent);
+        if (v.getId() == R.id.add_receipt) {
+            intent = new Intent(this, Receipt.class);
+        }
+        else if (v.getId() == R.id.add_category) {
+            intent = new Intent(this, CategoryForm.class);
+        }
+
+        if (intent != null) {
+            startActivity(intent);
+        }
     }
 }

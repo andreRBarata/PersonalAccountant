@@ -3,6 +3,7 @@ package com.baratagmail.quina.andre.personalaccountant;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -23,11 +24,17 @@ import java.util.TreeMap;
  */
 public class Receipt extends AppCompatActivity implements View.OnClickListener {
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    private File receiptsDir;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.receipt);
+
+        receiptsDir = new File(
+                getExternalFilesDir(null) + File.separator + "receipts"
+        );
 
         Spinner category = (Spinner)findViewById(R.id.category);
 
@@ -66,9 +73,13 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
 
     public void onClick(View v) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File file = new File(Environment.getExternalStorageDirectory(), "aname.jpg");
 
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, file); // set the image file name
+        File file = new File(
+                receiptsDir,
+                (System.currentTimeMillis()) + ".jpg"
+        );
+
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file)); // set the image file name
         // start the image capture Intent
 
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
@@ -77,7 +88,10 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         final ImageView receipt = (ImageView)findViewById(R.id.receipt);
 
-        receipt.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/" + "aname.jpg"));
+        receipt.setImageBitmap(BitmapFactory.decodeFile(
+                receiptsDir + File.separator + "aname.jpg"
+            )
+        );
         Log.d("log", "log");
     }
 }
