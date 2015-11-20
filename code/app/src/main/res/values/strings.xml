@@ -12,4 +12,5 @@
     <string name="name">Name</string>
     <string name="budget">Budget</string>
     <string name="counting_period">Counting Period</string>
+    <string name="total_cost">Total Cost</string>
 </resources>
