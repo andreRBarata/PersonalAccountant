@@ -102,5 +102,9 @@ public class DBManager {
         return cursor;
     }
 
-    
+    public long insert(String table, ContentValues values) {
+        return db.insert(table, null, values);
+    }
+
+
 }

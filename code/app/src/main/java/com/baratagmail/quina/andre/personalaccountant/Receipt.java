@@ -1,5 +1,6 @@
 package com.baratagmail.quina.andre.personalaccountant;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
@@ -21,7 +23,15 @@ import android.widget.Toast;
 import com.baratagmail.quina.andre.personalaccountant.components.FormPair;
 import com.baratagmail.quina.andre.personalaccountant.database.DBManager;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.TreeMap;
 
 /**
@@ -96,7 +106,49 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
             startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         }
         else if (v.getId() == R.id.receipt_save) {
-            Toast.makeText(this,"save", Toast.LENGTH_SHORT).show();
+            DBManager db = new DBManager(getBaseContext());
+            File file = new File(
+                    getExternalFilesDir(null) + File.separator + "receipts",
+                    (System.currentTimeMillis()) + ".jpg"
+            );
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //Sqllite datetime format
+
+
+            Spinner category = (Spinner)findViewById(R.id.category);
+            EditText cost = (EditText) findViewById(R.id.cost);
+
+            Integer category_id = Integer.valueOf(
+                    ((FormPair)
+                            category.getSelectedItem()).get("value")
+            );
+
+            ContentValues queryValues = new ContentValues();
+
+            queryValues.put("image_path", file.getPath());
+            queryValues.put("category_id", category_id);
+            queryValues.put("cost", cost.getText().toString());
+
+            try {
+                OutputStream fOut = new FileOutputStream(file);
+                photo.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+
+                fOut.flush();
+                fOut.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException ie) {
+                ie.printStackTrace();
+            }
+
+            db.open();
+
+            db.insert("Receipt", queryValues);
+
+            db.close();
+
+            Toast.makeText(this,"saved", Toast.LENGTH_SHORT).show();
+
+            finish();
         }
     }
 

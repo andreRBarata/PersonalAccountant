@@ -5,7 +5,7 @@
 */
 
 create table Category(
-	id integer primary key,
+	id integer primary key autoincrement,
 	name varchar(30),
 	budget decimal,
 	image_path varchar(100),
@@ -14,7 +14,7 @@ create table Category(
 );
 
 create table SpendingHistory(
-	id integer primary key,
+	id integer primary key autoincrement,
 	category_id integer,
 	budget decimal,
 	start_date datetime,
@@ -24,10 +24,10 @@ create table SpendingHistory(
 );
 
 create table Receipt(
-	id integer primary key,
+	id integer primary key autoincrement,
 	image_path varchar(100),
 	category_id integer,
-	date_recorded datetime,
+	date_recorded datetime default CURRENT_DATE,
 	cost decimal,
 	constraint Receipt_category_fk foreign key (category_id)
 		references Category(category_id)
