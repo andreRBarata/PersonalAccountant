@@ -106,5 +106,8 @@ public class DBManager {
         return db.insert(table, null, values);
     }
 
+    public int update(String table, ContentValues values, String where, String[] params) {
+        return db.update(table, values, where, params);
+    }
 
 }

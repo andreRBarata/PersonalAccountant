@@ -6,31 +6,37 @@ import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.baratagmail.quina.andre.personalaccountant.components.FormPair;
 import com.baratagmail.quina.andre.personalaccountant.components.MarkedListAdaptor;
 import com.baratagmail.quina.andre.personalaccountant.database.DBManager;
 
 import java.io.File;
+import java.util.List;
 
 
 public class Main extends AppCompatActivity implements View.OnClickListener {
-
+    private final static int CATEGORY_EDIT = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_categories);
-        super.setTitle("Categories");
 
         Button addReceipt = (Button)findViewById(R.id.add_receipt);
         Button addCategory = (Button)findViewById(R.id.add_category);
+        ListView categories = (ListView)findViewById(R.id.categories);
 
+        registerForContextMenu(categories);
 
         setCategoryList();
 
@@ -47,6 +53,30 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         super.onResume();
 
         setCategoryList();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(0, CATEGORY_EDIT, 0, R.string.edit);
+    }
+
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)
+                item.getMenuInfo();
+        int index = info.position;
+        ListView list = (ListView)findViewById(R.id.categories);
+
+        if (item.getItemId() == CATEGORY_EDIT) {
+            Intent intent = new Intent(this, CategoryForm.class);
+
+            intent.putExtra("id",
+                    ((FormPair)list.getItemAtPosition(index)).get("id")
+            );
+
+            startActivity(intent);
+        }
+        return true;
     }
 
     private void setCategoryList() {
@@ -78,7 +108,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         }
 
         list.setAdapter(categories);
-
+        cursor.close();
         db.close();
     }
 

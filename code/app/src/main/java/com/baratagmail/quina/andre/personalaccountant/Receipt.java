@@ -78,7 +78,7 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
         }
 
         category.setAdapter(categories);
-
+        cursor.close();
         db.close();
 
     }
