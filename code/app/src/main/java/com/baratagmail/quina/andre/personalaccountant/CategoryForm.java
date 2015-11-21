@@ -18,6 +18,7 @@ import android.widget.SpinnerAdapter;
 import com.baratagmail.quina.andre.personalaccountant.components.FormPair;
 import com.baratagmail.quina.andre.personalaccountant.database.DBManager;
 
+import java.util.Arrays;
 import java.util.TreeMap;
 
 /**
@@ -25,23 +26,29 @@ import java.util.TreeMap;
  */
 public class CategoryForm extends AppCompatActivity implements View.OnClickListener {
     private String id;
-
+    private EditText category_name;
+    private EditText category_budget;
+    private EditText category_imagepath;
+    private Spinner counting_period;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category_form);
-        EditText category_name = (EditText)
-                findViewById(R.id.category_name);
-        EditText category_budget = (EditText)
-                findViewById(R.id.category_budget);
-        EditText category_imagepath = (EditText)
-                findViewById(R.id.category_imagepath);
-        Spinner counting_period = (Spinner)
-                findViewById(R.id.counting_period);
+
         Button category_save = (Button) findViewById(R.id.category_save);
         Button category_delete = (Button) findViewById(R.id.category_cancel);
         ImageView category_image = (ImageView) findViewById(R.id.category_image);
+
+        category_name = (EditText)
+                findViewById(R.id.category_name);
+        category_budget = (EditText)
+                findViewById(R.id.category_budget);
+        category_imagepath = (EditText)
+                findViewById(R.id.category_imagepath);
+        counting_period = (Spinner)
+                findViewById(R.id.counting_period);
+
 
         category_save.setOnClickListener(this);
         category_delete.setOnClickListener(this);
@@ -81,7 +88,7 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
             cursor = db.select("Category",
                     new String[]{"name", "budget", "counting_period", "image_path"},
                     "id = ?",
-                    id
+                    Arrays.asList(id)
             );
 
 
@@ -112,14 +119,6 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
                 finish();
         }
         else if (v.getId() == R.id.category_save) {
-            EditText category_name = (EditText)
-                    findViewById(R.id.category_name);
-            EditText category_budget = (EditText)
-                    findViewById(R.id.category_budget);
-            EditText category_imagepath = (EditText)
-                    findViewById(R.id.category_imagepath);
-            Spinner counting_period = (Spinner)
-                    findViewById(R.id.counting_period);
             DBManager db = new DBManager(getBaseContext());
             ContentValues values = new ContentValues();
 
@@ -148,8 +147,8 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
             else {
                 db.open();
                 db.update("Category", values,
-                    "id = ?",
-                    new String[] {id}
+                        "id = ?",
+                        Arrays.asList(id)
                 );
                 db.close();
 

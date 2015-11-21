@@ -14,6 +14,8 @@ import android.util.Log;
 
 import com.baratagmail.quina.andre.personalaccountant.R;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -87,14 +89,14 @@ public class DBManager {
     * params[3] - having
     * params[4] - order by
     */
-    public Cursor select(String table, String[] columns, String... params) {
+    public Cursor select(String table, String[] columns, Object... params) {
 
         Cursor cursor = db.query(table, columns,
-                (params.length > 0)? params[0]: null,
-                (params.length > 1)? params[1].split(","): null,
-                (params.length > 2)? params[2]: null,
-                (params.length > 3)? params[3]: null,
-                (params.length > 4)? params[4]: null
+                (params.length > 0)? (String)params[0]: null,
+                (params.length > 1)? (String[])((List)params[1]).toArray(): null,
+                (params.length > 2)? (String)params[2]: null,
+                (params.length > 3)? (String)params[3]: null,
+                (params.length > 4)? (String)params[4]: null
         );
 
         cursor.moveToFirst();
@@ -106,8 +108,8 @@ public class DBManager {
         return db.insert(table, null, values);
     }
 
-    public int update(String table, ContentValues values, String where, String[] params) {
-        return db.update(table, values, where, params);
+    public int update(String table, ContentValues values, String where, List<String> params) {
+        return db.update(table, values, where, (String[])params.toArray());
     }
 
 }
