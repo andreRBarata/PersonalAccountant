@@ -11,7 +11,7 @@
         android:paddingBottom="10dp"
         android:id="@+id/category"/>
 
-
+    <!-- Default image from: https://www.google.com/design/icons/index.html -->
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

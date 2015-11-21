@@ -11,6 +11,8 @@
           <set>
             <option value="$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code" />
             <option value="$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/app" />
+            <option value="$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/libraries" />
+            <option value="$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/libraries/tess-two" />
           </set>
         </option>
       </GradleProjectSettings>

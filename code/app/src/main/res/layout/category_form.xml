@@ -2,29 +2,56 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <EditText
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/name"
-        android:id="@+id/category_name"/>
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/budget"
-        android:id="@+id/category_budget"
-        android:inputType="numberDecimal"
-        android:layout_below="@id/category_name"/>
+        android:layout_height="fill_parent"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_vertical_margin"
+        android:paddingEnd="@dimen/activity_vertical_margin">
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name"
+            android:id="@+id/category_name"/>
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/budget"
+            android:id="@+id/category_budget"
+            android:inputType="numberDecimal"
+            android:layout_below="@id/category_name"/>
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/counting_period"
-        android:layout_below="@+id/category_budget"
-        />
-    <Spinner
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-    </Spinner>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/counting_period"
+            android:textSize="@dimen/title"
+            android:paddingTop="16dp"
+            android:id="@+id/counting_label"
+            android:layout_below="@+id/category_budget"
+            />
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/counting_period"
+            android:layout_below="@+id/counting_label">
+        </Spinner>
+
+
+        <!-- Default image from: https://www.google.com/design/icons/index.html -->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/category_image"
+            android:contentDescription="@string/category_image"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/category_imagepath"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
     <GridLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -37,11 +64,11 @@
             android:text="@string/save"
             android:layout_rowSpan="1"
             android:layout_column="0"
-            android:id="@+id/save"/>
+            android:id="@+id/category_save"/>
         <Button
             android:text="@string/delete"
             android:layout_rowSpan="1"
             android:layout_column="1"
-            android:id="@+id/delete"/>
+            android:id="@+id/category_delete"/>
     </GridLayout>
 </RelativeLayout>

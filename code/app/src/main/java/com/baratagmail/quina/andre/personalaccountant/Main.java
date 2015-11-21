@@ -28,11 +28,29 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.main_categories);
         super.setTitle("Categories");
 
-        ListView list = (ListView)findViewById(R.id.categories);
         Button addReceipt = (Button)findViewById(R.id.add_receipt);
         Button addCategory = (Button)findViewById(R.id.add_category);
 
 
+        setCategoryList();
+
+        //Setting action of clicking addReceipt and addCategory
+        addReceipt.setOnClickListener(
+            this
+        );
+        addCategory.setOnClickListener(
+            this
+        );
+    }
+
+    protected void onResume() {
+        super.onResume();
+
+        setCategoryList();
+    }
+
+    private void setCategoryList() {
+        ListView list = (ListView)findViewById(R.id.categories);
         //Adding categories to the list
         MarkedListAdaptor categories =
                 new MarkedListAdaptor(
@@ -43,16 +61,17 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         db.open();
 
-        cursor = db.select("Category", new String[] {"name", "budget"});
+        cursor = db.select("Category", new String[] {"id", "name", "budget"});
 
         while (!cursor.isAfterLast()) {
             Log.d("db", cursor.getString(0));
             categories.add(
-                new FormPair(
-                        "label", cursor.getString(0),
-                        "budget", ("€" + cursor.getFloat(1)),
-                        "usage", "testetestestes"
-                )
+                    new FormPair(
+                            "id", String.valueOf(cursor.getInt(0)),
+                            "label", cursor.getString(1),
+                            "budget", ("€" + cursor.getFloat(2)),
+                            "usage", "testetestestes"
+                    )
             );
 
             cursor.moveToNext();
@@ -61,14 +80,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         list.setAdapter(categories);
 
         db.close();
-
-        //Setting action of clicking addReceipt and addCategory
-        addReceipt.setOnClickListener(
-            this
-        );
-        addCategory.setOnClickListener(
-            this
-        );
     }
 
     @Override

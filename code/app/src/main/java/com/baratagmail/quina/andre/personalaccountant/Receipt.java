@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,22 +16,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baratagmail.quina.andre.personalaccountant.components.FormPair;
 import com.baratagmail.quina.andre.personalaccountant.database.DBManager;
-
-import org.w3c.dom.Text;
+import com.googlecode.tesseract.android.TessBaseAPI;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.TreeMap;
 
 /**
  * Created by andre on 15-11-2015.
@@ -47,11 +41,13 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.receipt);
 
+        //Make cache dir
         File cache = new File(getExternalFilesDir(null) + File.separator + "cache");
         cache.mkdir();
 
         Spinner category = (Spinner)findViewById(R.id.category);
 
+        //Adding listeners
         ImageView receipt = (ImageView)findViewById(R.id.receipt_photo);
         Button save = (Button) findViewById(R.id.receipt_save);
         receipt.setOnClickListener(this);
@@ -73,7 +69,7 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
         while (!cursor.isAfterLast()) {
             categories.add(
                     new FormPair(
-                            "value", String.valueOf(cursor.getInt(0)),
+                            "id", String.valueOf(cursor.getInt(0)),
                             "name", cursor.getString(1)
                     )
             );
@@ -111,15 +107,12 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
                     getExternalFilesDir(null) + File.separator + "receipts",
                     (System.currentTimeMillis()) + ".jpg"
             );
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //Sqllite datetime format
-
-
             Spinner category = (Spinner)findViewById(R.id.category);
             EditText cost = (EditText) findViewById(R.id.cost);
 
             Integer category_id = Integer.valueOf(
                     ((FormPair)
-                            category.getSelectedItem()).get("value")
+                            category.getSelectedItem()).get("id")
             );
 
             ContentValues queryValues = new ContentValues();
@@ -157,6 +150,7 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
             final ImageView receipt = (ImageView) findViewById(R.id.receipt_photo);
+            //TessBaseAPI tessBaseAPI = new TessBaseAPI();
             String path = getExternalFilesDir(null) + File.separator + "cache"
                     + File.separator + "temp.jpg";
 
@@ -165,6 +159,8 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
                     path
                 );
 
+                //tessBaseAPI.setImage(photo);
+                //Log.d("photo",tessBaseAPI.getUTF8Text());
 
                 receipt.setImageBitmap(
                         photo

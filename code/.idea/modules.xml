@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/app/app.iml" filepath="$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/app/app.iml" />
       <module fileurl="file://$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/code.iml" filepath="$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/code.iml" />
+      <module fileurl="file://$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/libraries/libraries.iml" filepath="$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/libraries/libraries.iml" />
+      <module fileurl="file://$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/libraries/tess-two/tess-two.iml" filepath="$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/libraries/tess-two/tess-two.iml" />
     </modules>
   </component>
 </project>
