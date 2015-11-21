@@ -20,11 +20,8 @@ import com.baratagmail.quina.andre.personalaccountant.components.FormPair;
 import com.baratagmail.quina.andre.personalaccountant.components.MarkedListAdaptor;
 import com.baratagmail.quina.andre.personalaccountant.database.DBManager;
 
-import java.io.File;
-import java.util.List;
 
-
-public class Main extends AppCompatActivity implements View.OnClickListener {
+public class Main extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private final static int CATEGORY_EDIT = 0;
 
     @Override
@@ -47,6 +44,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         addCategory.setOnClickListener(
             this
         );
+        categories.setOnItemClickListener(this);
     }
 
     protected void onResume() {
@@ -91,16 +89,21 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         db.open();
 
-        cursor = db.select("Category", new String[] {"id", "name", "budget"});
+        cursor = db.select("Select c.id, c.name, c.budget, sum(r.cost) as total "
+                + "from Category c "
+                + "left join Receipt r on c.id = r.category_id "
+                + "and r.date_recorded >= c.last_reset "
+                + "group by c.id"
+        );
 
         while (!cursor.isAfterLast()) {
-            Log.d("db", cursor.getString(0));
+
             categories.add(
                     new FormPair(
                             "id", String.valueOf(cursor.getInt(0)),
                             "label", cursor.getString(1),
                             "budget", ("€" + cursor.getFloat(2)),
-                            "usage", "testetestestes"
+                            "usage",  ("€" + cursor.getFloat(3) + " spent")
                     )
             );
 
@@ -148,5 +151,15 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         if (intent != null) {
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this, CategoryView.class);
+        FormPair selected = (FormPair) parent.getItemAtPosition(position);
+
+        intent.putExtra("id", selected.get("id"));
+
+        startActivity(intent);
     }
 }

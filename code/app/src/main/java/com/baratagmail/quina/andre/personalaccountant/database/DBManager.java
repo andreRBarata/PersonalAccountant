@@ -104,6 +104,22 @@ public class DBManager {
         return cursor;
     }
 
+    public Cursor select(String query) {
+        Cursor cursor = db.rawQuery(query, null);
+
+        cursor.moveToFirst();
+
+        return cursor;
+    }
+
+    public Cursor select(String query, List<String> params) {
+        Cursor cursor = db.rawQuery(query, (String[])params.toArray());
+
+        cursor.moveToFirst();
+
+        return cursor;
+    }
+
     public long insert(String table, ContentValues values) {
         return db.insert(table, null, values);
     }

@@ -26,6 +26,10 @@
             android:name=".CategoryForm"
             android:label="@string/category" >
         </activity>
+        <activity
+            android:name=".CategoryView"
+            android:label="@string/category" >
+        </activity>
     </application>
 
 </manifest>

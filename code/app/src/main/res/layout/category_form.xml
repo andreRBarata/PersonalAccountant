@@ -39,14 +39,23 @@
         </Spinner>
 
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/category_icon"
+            android:textSize="@dimen/title"
+            android:paddingTop="16dp"
+            android:id="@+id/image_label"
+            android:layout_below="@+id/counting_period"
+            />
         <!-- Default image from: https://www.google.com/design/icons/index.html -->
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/counting_period"
             android:src="@drawable/image"
             android:id="@+id/category_image"
-            android:contentDescription="@string/category_image"/>
+            android:contentDescription="@string/category_image"
+            android:layout_below="@id/image_label"/>
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,14 +72,14 @@
         android:orientation="vertical"
         android:layout_alignParentBottom="true">
         <Button
-            android:text="@string/save"
-            android:layout_rowSpan="1"
-            android:layout_column="0"
-            android:id="@+id/category_save"/>
-        <Button
             android:text="@string/cancel"
             android:layout_rowSpan="1"
-            android:layout_column="1"
+            android:layout_column="0"
             android:id="@+id/category_cancel"/>
+        <Button
+            android:text="@string/save"
+            android:layout_rowSpan="1"
+            android:layout_column="1"
+            android:id="@+id/category_save"/>
     </GridLayout>
 </RelativeLayout>
