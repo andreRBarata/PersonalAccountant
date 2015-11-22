@@ -16,7 +16,6 @@ create table Category(
 create table SpendingHistory(
 	id integer primary key autoincrement,
 	category_id integer,
-	budget decimal,
 	start_date datetime,
 	end_date datetime,
 	constraint SpendingHistory_category_fk foreign key (category_id)
