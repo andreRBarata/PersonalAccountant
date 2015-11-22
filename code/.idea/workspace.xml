@@ -46,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/app/src/main/java/com/baratagmail/quina/andre/personalaccountant/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="108" column="10" selection-start-line="108" selection-start-column="10" selection-end-line="108" selection-end-column="10" />
+            <state vertical-scroll-proportion="-1.465035">
+              <caret line="185" column="13" selection-start-line="185" selection-start-column="13" selection-end-line="185" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2084#2097#0" expanded="true" />
@@ -108,11 +108,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CategoryForm.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CategoryForm.java" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/app/src/main/java/com/baratagmail/quina/andre/personalaccountant/CategoryForm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.1538463">
-              <caret line="172" column="5" selection-start-line="172" selection-start-column="5" selection-end-line="172" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="121" column="24" selection-start-line="121" selection-start-column="24" selection-end-line="121" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -4154,20 +4154,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/app/src/main/java/com/baratagmail/quina/andre/personalaccountant/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="108" column="10" selection-start-line="108" selection-start-column="10" selection-end-line="108" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2084#2097#0" expanded="true" />
-            <element signature="e#2140#2155#0" expanded="true" />
-            <element signature="e#3035#3325#0" expanded="true" />
-            <element signature="e#3324#3325#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/app/src/main/java/com/baratagmail/quina/andre/personalaccountant/Receipt.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -4178,9 +4164,23 @@
     </entry>
     <entry file="file://$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/app/src/main/java/com/baratagmail/quina/andre/personalaccountant/CategoryForm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.1538463">
-          <caret line="172" column="5" selection-start-line="172" selection-start-column="5" selection-end-line="172" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="121" column="24" selection-start-line="121" selection-start-column="24" selection-end-line="121" selection-end-column="24" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/andre.quina.barata@gmail.com/Escola/DIT/3rd year/Mobile Development/PersonalAccountant/code/app/src/main/java/com/baratagmail/quina/andre/personalaccountant/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.465035">
+          <caret line="185" column="13" selection-start-line="185" selection-start-column="13" selection-end-line="185" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2084#2097#0" expanded="true" />
+            <element signature="e#2140#2155#0" expanded="true" />
+            <element signature="e#3035#3325#0" expanded="true" />
+            <element signature="e#3324#3325#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -150,6 +150,13 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Ada
                 + "group by c.id"
         );
 
+        if (cursor.getCount() <= 0) {
+            findViewById(R.id.add_receipt).setVisibility(View.INVISIBLE);
+        }
+        else {
+            findViewById(R.id.add_receipt).setVisibility(View.VISIBLE);
+        }
+
         while (!cursor.isAfterLast()) {
 
             categories.add(
