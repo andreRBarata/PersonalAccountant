@@ -36,6 +36,7 @@ public class CategoryView extends AppCompatActivity {
 
         setTitle(cursor.getString(0));
 
+        cursor.close();
         db.close();
 
 

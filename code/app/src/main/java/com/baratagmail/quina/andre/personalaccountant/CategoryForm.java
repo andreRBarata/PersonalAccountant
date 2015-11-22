@@ -1,10 +1,12 @@
 package com.baratagmail.quina.andre.personalaccountant;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,8 @@ import android.widget.SpinnerAdapter;
 import com.baratagmail.quina.andre.personalaccountant.components.FormPair;
 import com.baratagmail.quina.andre.personalaccountant.database.DBManager;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TreeMap;
 
@@ -52,6 +56,7 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
 
         category_save.setOnClickListener(this);
         category_delete.setOnClickListener(this);
+        category_image.setOnClickListener(this);
 
         ArrayAdapter<FormPair> counts =
                 new ArrayAdapter<FormPair>(
@@ -154,6 +159,16 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
 
                 finish();
             }
+        }
+        else if (v.getId() == R.id.category_image) {
+            String str[] = new String[]{"Camera", "Gallery"};
+            new AlertDialog.Builder(this).setItems(str,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).show();
         }
     }
 }

@@ -125,7 +125,12 @@ public class DBManager {
     }
 
     public int update(String table, ContentValues values, String where, List<String> params) {
-        return db.update(table, values, where, (String[])params.toArray());
+        return db.update(table, values, where, (String[]) params.toArray());
     }
+
+    public int delete(String table, String where, List<String> params) {
+        return db.delete(table, where, (String[])params.toArray());
+    }
+
 
 }

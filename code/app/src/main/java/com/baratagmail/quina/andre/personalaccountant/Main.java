@@ -1,8 +1,10 @@
 package com.baratagmail.quina.andre.personalaccountant;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,9 +22,13 @@ import com.baratagmail.quina.andre.personalaccountant.components.FormPair;
 import com.baratagmail.quina.andre.personalaccountant.components.MarkedListAdaptor;
 import com.baratagmail.quina.andre.personalaccountant.database.DBManager;
 
+import java.io.File;
+import java.util.Arrays;
+
 
 public class Main extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private final static int CATEGORY_EDIT = 0;
+    private final static int CATEGORY_DELETE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +48,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Ada
             this
         );
         addCategory.setOnClickListener(
-            this
+                this
         );
         categories.setOnItemClickListener(this);
     }
@@ -57,24 +63,72 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Ada
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.add(0, CATEGORY_EDIT, 0, R.string.edit);
+        menu.add(0, CATEGORY_DELETE, 0, R.string.delete);
     }
 
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)
                 item.getMenuInfo();
-        int index = info.position;
-        ListView list = (ListView)findViewById(R.id.categories);
+        final int index = info.position;
+        final ListView list = (ListView)findViewById(R.id.categories);
+        final String id = ((FormPair)list.getItemAtPosition(index)).get("id");
 
         if (item.getItemId() == CATEGORY_EDIT) {
             Intent intent = new Intent(this, CategoryForm.class);
 
             intent.putExtra("id",
-                    ((FormPair)list.getItemAtPosition(index)).get("id")
+                    id
             );
 
             startActivity(intent);
         }
+        else if (item.getItemId() == CATEGORY_DELETE) {
+            new AlertDialog.Builder(this)
+                    .setMessage("This will delete all associated receipts\nAre you sure?")
+                    .setPositiveButton("Yes",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    deleteCategory(id);
+                                }
+                            })
+                    .setNegativeButton("No", null).show();
+        }
         return true;
+    }
+
+    private void deleteCategory(String id) {
+        DBManager db = new DBManager(getBaseContext());
+        Cursor cursor;
+
+        db.open();
+
+        cursor = db.select("Receipt", new String[]{"image_path"},
+                "category_id = ?",
+                Arrays.asList(id)
+        );
+
+        while (!cursor.isAfterLast()) {
+            File image = new File(cursor.getString(0));
+
+            image.delete();
+
+            cursor.moveToNext();
+        }
+
+        db.delete("Receipt",
+            "category_id = ?",
+            Arrays.asList(id)
+        );
+
+        db.delete("Category",
+                "id = ?",
+                Arrays.asList(id)
+        );
+
+        cursor.close();
+        db.close();
+        setCategoryList();
     }
 
     private void setCategoryList() {
