@@ -23,6 +23,7 @@ import com.baratagmail.quina.andre.personalaccountant.database.DBManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.TreeMap;
 
 /**
@@ -64,25 +65,27 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
                         android.R.layout.simple_spinner_dropdown_item
                 );
 
+
         counts.addAll(
-                new FormPair(
-                        "id", "0",
-                        "name", "Weekly"
-                ),
-                new FormPair(
-                        "id", "1",
-                        "name", "Monthly"
-                ),
-                new FormPair(
-                        "id", "2",
-                        "name", "Yearly"
-                )
+            new FormPair(
+                    "id", String.valueOf(Calendar.DAY_OF_WEEK),
+                    "name", "Weekly"
+            ),
+            new FormPair(
+                    "id", String.valueOf(Calendar.DAY_OF_MONTH),
+                    "name", "Monthly"
+            ),
+            new FormPair(
+                    "id", String.valueOf(Calendar.DAY_OF_YEAR),
+                    "name", "Yearly"
+            )
         );
 
         counting_period.setAdapter(counts);
 
         //Adding values for edit mode
         if (getIntent().getStringExtra("id") != null) {
+            int count = 0;
             DBManager db = new DBManager(getBaseContext());
             Cursor cursor;
 
@@ -102,7 +105,20 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
                     String.valueOf(cursor.getFloat(1))
             );
 
-            counting_period.setSelection(cursor.getInt(2));
+            while (count < counting_period.getCount()) {
+                FormPair item = (FormPair)counting_period
+                        .getItemAtPosition(count);
+
+                if (item.get("id") == String.valueOf(cursor.getInt(2))) {
+                    break;
+                }
+
+                count++;
+            }
+
+            if (count < counting_period.getCount()) {
+                counting_period.setSelection(count);
+            }
 
             if (!cursor.isNull(3) && !cursor.getString(3).isEmpty()) {
                 category_imagepath.setText(cursor.getString(3));

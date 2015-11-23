@@ -17,4 +17,6 @@
     <string name="counting_period">Counting Period</string>
     <string name="total_cost">Total Cost</string>
     <string name="category_image">Category Image</string>
+
+    <string name="sdcard_error">An error ocurred while saving the photo, please check the SD card</string>
 </resources>

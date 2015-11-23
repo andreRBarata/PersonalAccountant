@@ -27,6 +27,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.Calendar;
 
 /**
  * Created by andre on 15-11-2015.
@@ -102,7 +104,10 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
             startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         }
         else if (v.getId() == R.id.receipt_save) {
+            Calendar cal = Calendar.getInstance();
             DBManager db = new DBManager(getBaseContext());
+            Cursor cursor;
+
             File file = new File(
                     getExternalFilesDir(null) + File.separator + "receipts",
                     (System.currentTimeMillis()) + ".jpg"
@@ -110,10 +115,8 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
             Spinner category = (Spinner)findViewById(R.id.category);
             EditText cost = (EditText) findViewById(R.id.cost);
 
-            Integer category_id = Integer.valueOf(
-                    ((FormPair)
-                            category.getSelectedItem()).get("id")
-            );
+            String category_id = ((FormPair)
+                            category.getSelectedItem()).get("id");
 
             ContentValues queryValues = new ContentValues();
 
@@ -127,17 +130,27 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
 
                 fOut.flush();
                 fOut.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException ie) {
-                ie.printStackTrace();
+            } catch (Exception e) {
+                Toast.makeText(this,
+                        R.string.sdcard_error,
+                        Toast.LENGTH_SHORT
+                ).show();
             }
 
             db.open();
 
             db.insert("Receipt", queryValues);
 
+            cursor = db.select("Category", new String[] {"last_reset", "counting_period"},
+                    "id = ?",
+                    Arrays.asList(category_id)
+            );
+
+
+            cursor.close();
             db.close();
+
+
 
             Toast.makeText(this,"saved", Toast.LENGTH_SHORT).show();
 
