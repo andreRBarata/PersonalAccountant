@@ -6,14 +6,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baratagmail.quina.andre.personalaccountant.components.FormPair;
 import com.baratagmail.quina.andre.personalaccountant.database.DBManager;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * Created by andre on 21-11-2015.
@@ -25,59 +30,91 @@ public class CategoryView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category_view);
+        TextView budget = (TextView) findViewById(R.id.category_budget);
+        ImageView image = (ImageView) findViewById(R.id.category_image);
         Intent intent = getIntent();
         DBManager db = new DBManager(getBaseContext());
 
-        ListView receipts_view = (ListView) findViewById(R.id.receipts);
+        ListView receiptsView = (ListView) findViewById(R.id.receipts);
 
         ArrayList<FormPair> receipts =
                 new ArrayList<FormPair>();
-        Cursor category_cursor;
-        Cursor receipts_cursor;
+        Cursor categoryCursor;
+        Cursor receiptsCursor;
+        String last_reset;
+        String next_reset;
 
         id = intent.getStringExtra("id");
 
         db.open();
 
-        category_cursor = db.select(
+        categoryCursor = db.select(
                 "Category_xp",
-                new String[]{"name", "total"},
+                new String[]{
+                        "name",
+                        "total",
+                        "budget",
+                        "image_path",
+                        "last_reset",
+                        "next_reset"
+                },
                 "id = ?",
                 Arrays.asList(id)
         );
 
-        setTitle(category_cursor.getString(0));
+        setTitle(categoryCursor.getString(0));
 
-        receipts_cursor = db.select(
-                "Receipt",
-                new String[]{"date_recorded", "cost"},
-                "category_id = ?",
-                Arrays.asList(id)
+        last_reset = categoryCursor.getString(4);
+        next_reset = categoryCursor.getString(5);
+
+        budget.setText(
+                String.valueOf(categoryCursor.getFloat(2))
+        );
+        image.setImageResource(
+                getResources().getIdentifier(
+                        categoryCursor.getString(3),
+                        "drawable",
+                        getPackageName()
+                )
         );
 
-
-        while (!receipts_cursor.isAfterLast()) {
-            Log.d("field", receipts_cursor.getString(0));
-            receipts.add(
-                new FormPair(
-                        "text1", receipts_cursor.getString(0),
-                        "text2", "€" + receipts_cursor.getString(1)
-                )
+        if (last_reset != null && next_reset != null) {
+            receiptsCursor = db.select(
+                    "select date_recorded, cost from Receipt "
+                            + "where date_recorded between ? and ?",
+                    Arrays.asList(last_reset, next_reset)
             );
 
-            receipts_cursor.moveToNext();
+            while (!receiptsCursor.isAfterLast()) {
+                Log.d("field", receiptsCursor.getString(0));
+                receipts.add(
+                        new FormPair(
+                                "text1", receiptsCursor.getString(0),
+                                "text2", "€" + receiptsCursor.getString(1)
+                        )
+                );
+
+                receiptsCursor.moveToNext();
+            }
+
+            receiptsCursor.close();
+        }
+        else {
+            Toast.makeText(this, R.string.nothingfound_error, Toast.LENGTH_LONG).show();
         }
 
-        category_cursor.close();
-        receipts_cursor.close();
+
+
+
+        categoryCursor.close();
         db.close();
 
-        receipts_view.setAdapter(
+        receiptsView.setAdapter(
                 new SimpleAdapter(
-                        receipts_view.getContext(),
+                        receiptsView.getContext(),
                         receipts,
                         android.R.layout.simple_list_item_2,
-                        new String[]{"text1","text2"},
+                        new String[]{"text1", "text2"},
                         new int[]{android.R.id.text1, android.R.id.text2}
                 )
         );

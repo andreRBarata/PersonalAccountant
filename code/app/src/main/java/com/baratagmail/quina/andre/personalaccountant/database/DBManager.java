@@ -174,7 +174,7 @@ public class DBManager {
         Date next_reset;
         boolean toReturn = false;
 
-        Cursor cursor = select("Category", new String[]{"last_reset", "next_reset", "counting_period"},
+        Cursor cursor = select("Category", new String[]{"last_reset", "next_reset", "counting_period", "budget"},
                 "id = ?",
                 Arrays.asList(id)
         );
@@ -190,6 +190,7 @@ public class DBManager {
             if (new Date().after(next_reset)) {
                 values.put("start_date", dateFormat.format(last_reset));
                 values.put("end_date", dateFormat.format(next_reset));
+                values.put("budget", cursor.getFloat(2));
                 values.put("category_id", id);
 
                 toReturn = true;

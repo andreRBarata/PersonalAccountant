@@ -56,11 +56,6 @@
             android:id="@+id/category_image"
             android:contentDescription="@string/category_image"
             android:layout_below="@id/image_label"/>
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/category_imagepath"
-            android:visibility="gone"/>
     </RelativeLayout>
 
     <GridLayout
@@ -70,6 +65,7 @@
         android:columnCount="2"
         android:rowCount="1"
         android:orientation="vertical"
+        android:background="@android:color/white"
         android:layout_alignParentBottom="true">
         <Button
             android:text="@string/cancel"

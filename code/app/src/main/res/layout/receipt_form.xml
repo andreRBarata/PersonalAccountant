@@ -1,31 +1,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_vertical_margin" tools:context=".Main">
+    tools:context=".Main">
 
-    <Spinner
-        android:text="@string/add_receipt"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:gravity="top"
-        android:paddingBottom="10dp"
-        android:id="@+id/category"/>
-
-    <!-- Default image from: https://www.google.com/design/icons/index.html -->
-    <ImageView
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/category"
-        android:src="@drawable/camera"
-        android:contentDescription="@string/add_receipt"
-        android:id="@+id/receipt_photo"/>
+        android:padding="@dimen/activity_vertical_margin" >
 
+        <Spinner
+            android:text="@string/add_receipt"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="top"
+            android:paddingBottom="10dp"
+            android:id="@+id/category"/>
+
+        <!-- Default image from: https://www.google.com/design/icons/index.html -->
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/category"
+            android:src="@drawable/camera"
+            android:contentDescription="@string/add_receipt"
+            android:id="@+id/receipt_photo"/>
+
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:columnCount="2"
         android:rowCount="2"
         android:orientation="vertical"
+        android:padding="@dimen/activity_vertical_margin"
+        android:background="@android:color/white"
         android:layout_alignParentBottom="true">
         
 

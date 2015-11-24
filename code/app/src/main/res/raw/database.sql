@@ -19,6 +19,7 @@ create table SpendingHistory(
 	category_id integer,
 	start_date datetime,
 	end_date datetime,
+	budget decimal,
 	constraint SpendingHistory_category_fk foreign key (category_id)
 		references Category(category_id)
 );
@@ -34,7 +35,8 @@ create table Receipt(
 );
 
 create view Category_xp as
-	select c.id, c.name, c.budget, c.image_path, sum(r.cost) as total
+	select c.id, c.name, c.budget, c.image_path, sum(r.cost) as total,
+		c.last_reset, c.next_reset
 		from Category c
 		left join Receipt r on c.id = r.category_id
 		and r.date_recorded >= c.last_reset

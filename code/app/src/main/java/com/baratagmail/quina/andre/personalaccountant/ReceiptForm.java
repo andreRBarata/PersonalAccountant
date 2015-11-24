@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,15 +19,11 @@ import android.widget.Toast;
 
 import com.baratagmail.quina.andre.personalaccountant.components.FormPair;
 import com.baratagmail.quina.andre.personalaccountant.database.DBManager;
-import com.googlecode.tesseract.android.TessBaseAPI;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,7 +31,7 @@ import java.util.Date;
 /**
  * Created by andre on 15-11-2015.
  */
-public class Receipt extends AppCompatActivity implements View.OnClickListener {
+public class ReceiptForm extends AppCompatActivity implements View.OnClickListener {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private Bitmap photo;
 
@@ -44,7 +39,7 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.receipt);
+        setContentView(R.layout.receipt_form);
 
         //Make cache dir
         File cache = new File(getExternalFilesDir(null) + File.separator + "cache");
@@ -108,7 +103,6 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
         }
         else if (v.getId() == R.id.receipt_save) {
             Calendar cal = Calendar.getInstance();
-            //Sqlite's date format
             DBManager db = new DBManager(getBaseContext());
             Cursor cursor;
             Date last_reset;
@@ -116,8 +110,14 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
             boolean newCycle = false;
 
 
+            File folder = new File(
+                    getExternalFilesDir(null) + File.separator + "receipts"
+            );
+
+            folder.mkdir();
+
             File file = new File(
-                    getExternalFilesDir(null) + File.separator + "receipts",
+                    folder,
                     (System.currentTimeMillis()) + ".jpg"
             );
             Spinner category = (Spinner)findViewById(R.id.category);

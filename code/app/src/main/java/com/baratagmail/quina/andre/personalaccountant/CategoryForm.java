@@ -51,6 +51,8 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
         Button category_delete = (Button) findViewById(R.id.category_cancel);
         category_image = (ImageView) findViewById(R.id.category_image);
 
+        category_imagepath = "image";
+
         category_name = (EditText)
                 findViewById(R.id.category_name);
         category_budget = (EditText)
@@ -186,7 +188,6 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
             GridLayout.LayoutParams param = new GridLayout.LayoutParams();
 
             param.width = GridLayout.LayoutParams.MATCH_PARENT;
-            param.setGravity(Gravity.CENTER);
 
             layout.setLayoutParams(param);
             layout.setColumnCount(4);

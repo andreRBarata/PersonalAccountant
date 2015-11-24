@@ -35,24 +35,31 @@ public class MarkedListAdaptor extends ArrayAdapter<TreeMap<String,String>> {
         }
 
         TextView label=(TextView)row.findViewById(R.id.text);
-        label.setText(getItem(position).get("text"));
+        if (getItem(position).containsKey("text")) {
+            label.setText(getItem(position).get("text"));
+        }
 
         TextView budget=(TextView)row.findViewById(R.id.budget);
-        budget.setText(getItem(position).get("budget"));
+        if (getItem(position).containsKey("budget")) {
+            budget.setText(getItem(position).get("budget"));
+        }
 
         TextView usage=(TextView)row.findViewById(R.id.usage);
-        usage.setText(getItem(position).get("usage"));
+        if (getItem(position).containsKey("usage")) {
+            usage.setText(getItem(position).get("usage"));
+        }
 
         ImageView image = (ImageView)row.findViewById(R.id.category_image);
 
-
-        image.setImageResource(
-            row.getResources().getIdentifier(
-                    getItem(position).get("image_path"),
-                    "drawable",
-                    getContext().getPackageName()
-            )
-        );
+        if (getItem(position).containsKey("image_path") && getItem(position).get("image_path") != null) {
+            image.setImageResource(
+                    row.getResources().getIdentifier(
+                            getItem(position).get("image_path"),
+                            "drawable",
+                            getContext().getPackageName()
+                    )
+            );
+        }
 
         return row;
     }

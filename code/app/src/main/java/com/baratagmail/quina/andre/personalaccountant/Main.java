@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -17,14 +16,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.baratagmail.quina.andre.personalaccountant.components.FormPair;
 import com.baratagmail.quina.andre.personalaccountant.components.MarkedListAdaptor;
 import com.baratagmail.quina.andre.personalaccountant.database.DBManager;
-
-import java.io.File;
-import java.util.Arrays;
 
 
 public class Main extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
@@ -176,7 +171,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Ada
         Intent intent = null;
 
         if (v.getId() == R.id.add_receipt) {
-            intent = new Intent(this, Receipt.class);
+            intent = new Intent(this, ReceiptForm.class);
         }
         else if (v.getId() == R.id.add_category) {
             intent = new Intent(this, CategoryForm.class);

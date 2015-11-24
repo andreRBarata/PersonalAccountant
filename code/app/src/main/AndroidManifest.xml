@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Receipt"
+            android:name=".ReceiptForm"
             android:label="@string/receipt" >
         </activity>
         <activity
