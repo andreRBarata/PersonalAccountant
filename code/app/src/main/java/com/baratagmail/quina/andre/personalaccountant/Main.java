@@ -4,6 +4,7 @@ package com.baratagmail.quina.andre.personalaccountant;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -92,6 +93,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Ada
                                     DBManager db = new DBManager(getBaseContext());
                                     db.open();
                                     db.deleteCategory(id);
+                                    setCategoryList();
                                     db.close();
                                 }
                             })
@@ -107,20 +109,16 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Ada
         //Adding categories to the list
         MarkedListAdaptor categories =
                 new MarkedListAdaptor(
-                        list.getContext(),
-                        R.id.categories,
-                        R.layout.marked_row
+                        list.getContext()
                 );
         DBManager db = new DBManager(getBaseContext());
         Cursor cursor;
 
         db.open();
 
-        cursor = db.select("Select c.id, c.name, c.budget, sum(r.cost) as total "
-                + "from Category c "
-                + "left join Receipt r on c.id = r.category_id "
-                + "and r.date_recorded >= c.last_reset "
-                + "group by c.id"
+        cursor = db.select(
+                "Category_xp",
+                new String[]{"id", "name", "budget", "total", "image_path"}
         );
 
         if (cursor.getCount() <= 0) {
@@ -136,8 +134,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Ada
                     new FormPair(
                             "id", String.valueOf(cursor.getInt(0)),
                             "text", cursor.getString(1),
-                            "budget", ("€" + cursor.getFloat(2)),
-                            "usage",  ("€" + cursor.getFloat(3) + " spent")
+                            "budget", ("€" + cursor.getFloat(2) + " budget"),
+                            "usage", ("€" + cursor.getFloat(3) + " spent"),
+                            "image_path", cursor.getString(4),
+                            "color", String.valueOf(Color.BLUE)
                     )
             );
 

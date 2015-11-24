@@ -64,7 +64,7 @@ public class DBManager {
             while (scan.hasNext()) {
                 String line = scan.nextLine();
                 commands.append(line + "\n");
-                if (line.endsWith(");")) {
+                if (line.endsWith(";")) {
                     db.execSQL(commands.toString());
                     commands = new StringBuilder();
                 }
@@ -179,21 +179,26 @@ public class DBManager {
                 Arrays.asList(id)
         );
 
-        last_reset = dateFormat.parse(cursor.getString(0));
-        next_reset = dateFormat.parse(cursor.getString(1));
 
-        if (new Date().after(next_reset)) {
+
+        if (!cursor.isNull(0)) {
             ContentValues values = new ContentValues();
 
-            values.put("start_date", dateFormat.format(last_reset));
-            values.put("end_date", dateFormat.format(next_reset));
+            last_reset = dateFormat.parse(cursor.getString(0));
+            next_reset = dateFormat.parse(cursor.getString(1));
 
-            toReturn = true;
+            if (new Date().after(next_reset)) {
+                values.put("start_date", dateFormat.format(last_reset));
+                values.put("end_date", dateFormat.format(next_reset));
+                values.put("category_id", id);
 
-            insert(
-                    "SpendingHistory",
-                    values
-            );
+                toReturn = true;
+
+                insert(
+                        "SpendingHistory",
+                        values
+                );
+            }
         }
 
         return toReturn;

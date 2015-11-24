@@ -5,32 +5,45 @@
     android:layout_height="wrap_content"
     android:padding="10dp">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxHeight="20dp"
+        android:id="@+id/category_image"
+        android:paddingRight="5dp"
+        android:paddingEnd="5dp"
+        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
+        />
+
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:id="@+id/text"
+        android:layout_toRightOf="@id/category_image"
+        android:layout_toEndOf="@id/category_image"
         android:textSize="@dimen/list_font"
         android:layout_gravity="center_vertical"
         android:layout_centerVertical="true"/>
-    <RelativeLayout
-        android:layout_width="wrap_content"
+
+    <TextView
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/list_sub_font"
+        android:id="@+id/budget"
+        android:padding="10dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true">
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textSize="@dimen/list_sub_font"
-            android:id="@+id/budget"
-            />
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textSize="@dimen/list_sub_font"
-            android:id="@+id/usage"
-            android:layout_below="@+id/budget"
-            android:layout_marginTop="5dp"
-            />
-    </RelativeLayout>
+        android:layout_alignParentRight="true"
+        />
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/list_sub_font"
+        android:id="@+id/usage"
+        android:padding="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        />
 
 </RelativeLayout>

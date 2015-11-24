@@ -32,3 +32,10 @@ create table Receipt(
 	constraint Receipt_category_fk foreign key (category_id)
 		references Category(category_id)
 );
+
+create view Category_xp as
+	select c.id, c.name, c.budget, c.image_path, sum(r.cost) as total
+		from Category c
+		left join Receipt r on c.id = r.category_id
+		and r.date_recorded >= c.last_reset
+		group by c.id;

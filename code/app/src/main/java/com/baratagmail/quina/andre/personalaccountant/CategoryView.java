@@ -40,8 +40,8 @@ public class CategoryView extends AppCompatActivity {
         db.open();
 
         category_cursor = db.select(
-                "Category",
-                new String[]{"name"},
+                "Category_xp",
+                new String[]{"name", "total"},
                 "id = ?",
                 Arrays.asList(id)
         );

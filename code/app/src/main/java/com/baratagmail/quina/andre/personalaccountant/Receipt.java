@@ -190,6 +190,7 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
                         db.dateFormat.format(next_reset)
                 );
 
+
                 db.update(
                         "Category",
                         values,
