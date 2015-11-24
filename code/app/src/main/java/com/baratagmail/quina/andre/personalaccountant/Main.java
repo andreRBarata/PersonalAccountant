@@ -89,7 +89,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Ada
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    deleteCategory(id);
+                                    DBManager db = new DBManager(getBaseContext());
+                                    db.open();
+                                    db.deleteCategory(id);
+                                    db.close();
                                 }
                             })
                     .setNegativeButton("No", null).show();
@@ -97,46 +100,16 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Ada
         return true;
     }
 
-    private void deleteCategory(String id) {
-        DBManager db = new DBManager(getBaseContext());
-        Cursor cursor;
 
-        db.open();
-
-        cursor = db.select("Receipt", new String[]{"image_path"},
-                "category_id = ?",
-                Arrays.asList(id)
-        );
-
-        while (!cursor.isAfterLast()) {
-            File image = new File(cursor.getString(0));
-
-            image.delete();
-
-            cursor.moveToNext();
-        }
-
-        db.delete("Receipt",
-            "category_id = ?",
-            Arrays.asList(id)
-        );
-
-        db.delete("Category",
-                "id = ?",
-                Arrays.asList(id)
-        );
-
-        cursor.close();
-        db.close();
-        setCategoryList();
-    }
 
     private void setCategoryList() {
         ListView list = (ListView)findViewById(R.id.categories);
         //Adding categories to the list
         MarkedListAdaptor categories =
                 new MarkedListAdaptor(
-                        list.getContext()
+                        list.getContext(),
+                        R.id.categories,
+                        R.layout.marked_row
                 );
         DBManager db = new DBManager(getBaseContext());
         Cursor cursor;
@@ -162,7 +135,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Ada
             categories.add(
                     new FormPair(
                             "id", String.valueOf(cursor.getInt(0)),
-                            "label", cursor.getString(1),
+                            "text", cursor.getString(1),
                             "budget", ("€" + cursor.getFloat(2)),
                             "usage",  ("€" + cursor.getFloat(3) + " spent")
                     )

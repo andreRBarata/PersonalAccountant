@@ -1,5 +1,6 @@
 package com.baratagmail.quina.andre.personalaccountant;
 
+import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -8,11 +9,15 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.Gallery;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -33,8 +38,9 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
     private String id;
     private EditText category_name;
     private EditText category_budget;
-    private EditText category_imagepath;
+    private String category_imagepath;
     private Spinner counting_period;
+    private ImageView category_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +49,12 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
 
         Button category_save = (Button) findViewById(R.id.category_save);
         Button category_delete = (Button) findViewById(R.id.category_cancel);
-        ImageView category_image = (ImageView) findViewById(R.id.category_image);
+        category_image = (ImageView) findViewById(R.id.category_image);
 
         category_name = (EditText)
                 findViewById(R.id.category_name);
         category_budget = (EditText)
-                findViewById(R.id.category_budget);
-        category_imagepath = (EditText)
-                findViewById(R.id.category_imagepath);
+                findViewById(R.id.category_budget);;
         counting_period = (Spinner)
                 findViewById(R.id.counting_period);
 
@@ -121,11 +125,12 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
             }
 
             if (!cursor.isNull(3) && !cursor.getString(3).isEmpty()) {
-                category_imagepath.setText(cursor.getString(3));
-                category_image.setImageBitmap(
-                    BitmapFactory.decodeFile(
-                            cursor.getString(3)
-                    )
+                category_imagepath = cursor.getString(3);
+                category_image.setImageResource(
+                        getResources().getIdentifier(cursor.getString(3),
+                                "drawable",
+                                getPackageName()
+                        )
                 );
             }
             cursor.close();
@@ -150,7 +155,7 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
                     category_budget.getText().toString()
             );
             values.put("image_path",
-                    category_imagepath.getText().toString()
+                    category_imagepath
             );
             values.put("counting_period",
                     ((FormPair)
@@ -177,14 +182,42 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
             }
         }
         else if (v.getId() == R.id.category_image) {
-            String str[] = new String[]{"Camera", "Gallery"};
-            new AlertDialog.Builder(this).setItems(str,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+            GridLayout layout = new GridLayout(getBaseContext());
+            GridLayout.LayoutParams param = new GridLayout.LayoutParams();
 
+            param.width = GridLayout.LayoutParams.MATCH_PARENT;
+            param.setGravity(Gravity.CENTER);
+
+            layout.setLayoutParams(param);
+            layout.setColumnCount(4);
+
+
+
+            for (final String icon: getResources().getStringArray(R.array.icons)) {
+                ImageView view = new ImageView(layout.getContext());
+                final int resource = getResources().getIdentifier(icon,
+                        "drawable",
+                        getPackageName()
+                );
+
+                view.setImageResource(
+                        resource
+                );
+
+                view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            category_image.setImageResource(resource);
+                            category_imagepath = icon;
                         }
-                    }).show();
+                    }
+                );
+
+                layout.addView(view);
+            }
+
+            new AlertDialog.Builder(this).setView(layout)
+                    .setPositiveButton(R.string.ok, null).show();
         }
     }
 }

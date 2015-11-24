@@ -10,7 +10,8 @@ create table Category(
 	budget decimal,
 	image_path varchar(100),
 	counting_period integer,
-	last_reset datetime
+	last_reset datetime,
+	next_reset datetime
 );
 
 create table SpendingHistory(
@@ -26,7 +27,7 @@ create table Receipt(
 	id integer primary key autoincrement,
 	image_path varchar(100),
 	category_id integer,
-	date_recorded datetime default CURRENT_DATE,
+	date_recorded datetime default CURRENT_TIMESTAMP,
 	cost decimal,
 	constraint Receipt_category_fk foreign key (category_id)
 		references Category(category_id)

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="icons">
+        <item>ic_flight_black_48dp</item>
+        <item>ic_weekend_black_48dp</item>
+        <item>ic_image_black_48dp</item>
+        <item>ic_photo_camera_black_48dp</item>
+        <item>ic_music_video_black_48dp</item>
+        <item>ic_local_hospital_black_48dp</item>
+        <item>ic_child_friendly_black_48dp</item>
+        <item>ic_beach_access_black_48dp</item>
+        <item>ic_devices_other_black_48dp</item>
+        <item>ic_shopping_cart_black_48dp</item>
+        <item>ic_book_black_48dp</item>
+        <item>ic_computer_black_48dp</item>
+    </string-array>
+</resources>

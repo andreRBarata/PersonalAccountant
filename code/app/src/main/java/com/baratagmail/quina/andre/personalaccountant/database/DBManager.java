@@ -11,10 +11,16 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.baratagmail.quina.andre.personalaccountant.R;
 
+import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,6 +34,7 @@ import java.util.Scanner;
  */
 
 public class DBManager {
+    public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "PersonalAccountant";
 
@@ -129,8 +136,66 @@ public class DBManager {
     }
 
     public int delete(String table, String where, List<String> params) {
-        return db.delete(table, where, (String[])params.toArray());
+        return db.delete(table, where, (String[]) params.toArray());
     }
 
 
+    public void deleteCategory(String id) {
+        Cursor cursor;
+
+        cursor = select("Receipt", new String[]{"image_path"},
+                "category_id = ?",
+                Arrays.asList(id)
+        );
+
+        while (!cursor.isAfterLast()) {
+            File image = new File(cursor.getString(0));
+
+            image.delete();
+
+            cursor.moveToNext();
+        }
+
+        delete("Receipt",
+                "category_id = ?",
+                Arrays.asList(id)
+        );
+
+        delete("Category",
+                "id = ?",
+                Arrays.asList(id)
+        );
+
+        cursor.close();
+    }
+
+    public boolean updateCategory(String id) throws ParseException{
+        Date last_reset;
+        Date next_reset;
+        boolean toReturn = false;
+
+        Cursor cursor = select("Category", new String[]{"last_reset", "next_reset", "counting_period"},
+                "id = ?",
+                Arrays.asList(id)
+        );
+
+        last_reset = dateFormat.parse(cursor.getString(0));
+        next_reset = dateFormat.parse(cursor.getString(1));
+
+        if (new Date().after(next_reset)) {
+            ContentValues values = new ContentValues();
+
+            values.put("start_date", dateFormat.format(last_reset));
+            values.put("end_date", dateFormat.format(next_reset));
+
+            toReturn = true;
+
+            insert(
+                    "SpendingHistory",
+                    values
+            );
+        }
+
+        return toReturn;
+    }
 }

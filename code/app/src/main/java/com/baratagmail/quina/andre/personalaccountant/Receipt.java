@@ -27,8 +27,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by andre on 15-11-2015.
@@ -105,8 +108,13 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
         }
         else if (v.getId() == R.id.receipt_save) {
             Calendar cal = Calendar.getInstance();
+            //Sqlite's date format
             DBManager db = new DBManager(getBaseContext());
             Cursor cursor;
+            Date last_reset;
+            Date next_reset;
+            boolean newCycle = false;
+
 
             File file = new File(
                     getExternalFilesDir(null) + File.separator + "receipts",
@@ -118,12 +126,11 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
             String category_id = ((FormPair)
                             category.getSelectedItem()).get("id");
 
+
             ContentValues queryValues = new ContentValues();
 
-            queryValues.put("image_path", file.getPath());
-            queryValues.put("category_id", category_id);
-            queryValues.put("cost", cost.getText().toString());
 
+            //Saving photo
             try {
                 OutputStream fOut = new FileOutputStream(file);
                 photo.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
@@ -139,13 +146,57 @@ public class Receipt extends AppCompatActivity implements View.OnClickListener {
 
             db.open();
 
+            queryValues.put("image_path", file.getPath());
+            queryValues.put("category_id", category_id);
+            queryValues.put("cost", cost.getText().toString());
+
+            //Saving Receipt
             db.insert("Receipt", queryValues);
 
-            cursor = db.select("Category", new String[] {"last_reset", "counting_period"},
+            cursor = db.select("Category", new String[]{"last_reset","counting_period"},
                     "id = ?",
                     Arrays.asList(category_id)
             );
 
+            try {
+                newCycle = db.updateCategory(category_id);
+            }
+            catch (ParseException e) {
+                Toast.makeText(this, "Internal Error", Toast.LENGTH_LONG);
+            }
+
+            if (cursor.isNull(0) || newCycle) {
+                ContentValues values = new ContentValues();
+                int counting_period = cursor.getInt(1);
+
+                //noinspection ResourceType
+                cal.set(counting_period,
+                        Calendar.getInstance().getActualMinimum(counting_period)
+                );
+
+                last_reset = cal.getTime();
+
+                //noinspection ResourceType
+                cal.set(counting_period,
+                        Calendar.getInstance().getActualMaximum(counting_period)
+                );
+
+                next_reset = cal.getTime();
+
+                values.put("last_reset",
+                        db.dateFormat.format(last_reset)
+                );
+                values.put("next_reset",
+                        db.dateFormat.format(next_reset)
+                );
+
+                db.update(
+                        "Category",
+                        values,
+                        "id = ?",
+                        Arrays.asList(category_id)
+                );
+            }
 
             cursor.close();
             db.close();

@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.baratagmail.quina.andre.personalaccountant.R;
 
+import org.xmlpull.v1.XmlPullParser;
+
 import java.util.TreeMap;
 
 
@@ -16,8 +18,12 @@ import java.util.TreeMap;
  * Created by andre on 08-11-2015.
  */
 public class MarkedListAdaptor extends ArrayAdapter<TreeMap<String,String>> {
-    public MarkedListAdaptor(Context context) {
-        super(context, R.layout.marked_row);
+    private int row_layout;
+
+    public MarkedListAdaptor(Context context, int resource, int row_layout) {
+        super(context, resource);
+
+        this.row_layout = row_layout;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -25,20 +31,23 @@ public class MarkedListAdaptor extends ArrayAdapter<TreeMap<String,String>> {
         //return super.getView(position, convertView, parent);
 
         View row = convertView;
+        TreeMap<String,String> item = getItem(position);
 
         if(row==null){
             LayoutInflater inflater = LayoutInflater.from(super.getContext());
-            row=inflater.inflate(R.layout.marked_row, parent, false);
+            row=inflater.inflate(row_layout, parent, false);
         }
 
-        TextView label=(TextView)row.findViewById(R.id.text);
-        label.setText(getItem(position).get("label"));
-
-        TextView budget=(TextView)row.findViewById(R.id.budget);
-        budget.setText(getItem(position).get("budget"));
-
-        TextView usage=(TextView)row.findViewById(R.id.usage);
-        usage.setText(getItem(position).get("usage"));
+        for (String key: item.keySet()) {
+            int id = row.getResources().getIdentifier(key,
+                    "id",
+                    row.getContext().getPackageName()
+            );
+            if (id != 0) {
+                TextView label = (TextView) row.findViewById(id);
+                label.setText(getItem(position).get(key));
+            }
+        }
 
         return row;
     }
