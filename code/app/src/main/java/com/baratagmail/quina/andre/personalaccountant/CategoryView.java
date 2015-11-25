@@ -30,7 +30,10 @@ public class CategoryView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category_view);
+
         TextView budget = (TextView) findViewById(R.id.category_budget);
+        TextView spent = (TextView) findViewById(R.id.category_spent);
+        TextView tally = (TextView) findViewById(R.id.category_tally);
         ImageView image = (ImageView) findViewById(R.id.category_image);
         Intent intent = getIntent();
         DBManager db = new DBManager(getBaseContext());
@@ -68,8 +71,15 @@ public class CategoryView extends AppCompatActivity {
         next_reset = categoryCursor.getString(5);
 
         budget.setText(
-                String.valueOf(categoryCursor.getFloat(2))
+                "€" + String.valueOf(categoryCursor.getFloat(2)) + " budget"
         );
+        spent.setText(
+                "€" + String.valueOf(categoryCursor.getFloat(1)) + " spent"
+        );
+        tally.setText(
+                "between " + last_reset.split(" ")[0] + " and " + next_reset.split(" ")[0]
+        );
+
         image.setImageResource(
                 getResources().getIdentifier(
                         categoryCursor.getString(3),
@@ -113,9 +123,9 @@ public class CategoryView extends AppCompatActivity {
                 new SimpleAdapter(
                         receiptsView.getContext(),
                         receipts,
-                        android.R.layout.simple_list_item_2,
+                        R.layout.receipt_row,
                         new String[]{"text1", "text2"},
-                        new int[]{android.R.id.text1, android.R.id.text2}
+                        new int[]{R.id.text1, R.id.text2}
                 )
         );
     }
