@@ -34,6 +34,7 @@ import java.util.Scanner;
  */
 
 public class DBManager {
+    //Date format used by sql developer
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "PersonalAccountant";
@@ -140,6 +141,31 @@ public class DBManager {
     }
 
 
+    public void deleteReceipt(String id) {
+        Cursor cursor;
+
+        cursor = select("Receipt", new String[]{"image_path"},
+                "id = ?",
+                Arrays.asList(id)
+        );
+
+        while (!cursor.isAfterLast()) {
+            if (!cursor.isNull(0)) {
+                File image = new File(cursor.getString(0));
+
+                image.delete();
+            }
+            cursor.moveToNext();
+        }
+
+        delete("Receipt",
+                "id = ?",
+                Arrays.asList(id)
+        );
+
+        cursor.close();
+    }
+
     public void deleteCategory(String id) {
         Cursor cursor;
 
@@ -149,10 +175,12 @@ public class DBManager {
         );
 
         while (!cursor.isAfterLast()) {
-            File image = new File(cursor.getString(0));
+            if (!cursor.isNull(0)) {
+                File image = new File(cursor.getString(0));
 
-            image.delete();
+                image.delete();
 
+            }
             cursor.moveToNext();
         }
 
@@ -169,17 +197,20 @@ public class DBManager {
         cursor.close();
     }
 
+
+    /*
+     * If the category is past its reset time creates a new
+     * "SpendingHistory" record and returns if the category was reset
+     */
     public boolean updateCategory(String id) throws ParseException{
         Date last_reset;
         Date next_reset;
         boolean toReturn = false;
 
-        Cursor cursor = select("Category", new String[]{"last_reset", "next_reset", "counting_period", "budget"},
+        Cursor cursor = select("Category", new String[]{"last_reset", "next_reset", "counting_period", "current_budget"},
                 "id = ?",
                 Arrays.asList(id)
         );
-
-
 
         if (!cursor.isNull(0)) {
             ContentValues values = new ContentValues();
@@ -190,7 +221,7 @@ public class DBManager {
             if (new Date().after(next_reset)) {
                 values.put("start_date", dateFormat.format(last_reset));
                 values.put("end_date", dateFormat.format(next_reset));
-                values.put("budget", cursor.getFloat(2));
+                values.put("budget", cursor.getFloat(3));
                 values.put("category_id", id);
 
                 toReturn = true;

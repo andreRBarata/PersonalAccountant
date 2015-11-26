@@ -21,10 +21,18 @@ import com.baratagmail.quina.andre.personalaccountant.components.FormPair;
 import com.baratagmail.quina.andre.personalaccountant.components.MarkedListAdaptor;
 import com.baratagmail.quina.andre.personalaccountant.database.DBManager;
 
+/**
+ * Created by andre on 02-11-2015.
+ *
+ * Main page shows the list of different categories and has buttons
+ * for creating categories and receipts
+ */
 
 public class Main extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private final static int CATEGORY_EDIT = 0;
     private final static int CATEGORY_DELETE = 1;
+    private final static int CATEGORY_HISTORY = 2;
+    private ListView categories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +41,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Ada
 
         Button addReceipt = (Button)findViewById(R.id.add_receipt);
         Button addCategory = (Button)findViewById(R.id.add_category);
-        ListView categories = (ListView)findViewById(R.id.categories);
+        categories = (ListView)findViewById(R.id.categories);
 
         registerForContextMenu(categories);
 
@@ -60,14 +68,14 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Ada
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.add(0, CATEGORY_EDIT, 0, R.string.edit);
         menu.add(0, CATEGORY_DELETE, 0, R.string.delete);
+        menu.add(0, CATEGORY_HISTORY, 0, R.string.see_history);
     }
 
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)
                 item.getMenuInfo();
         final int index = info.position;
-        final ListView list = (ListView)findViewById(R.id.categories);
-        final String id = ((FormPair)list.getItemAtPosition(index)).get("id");
+        final String id = ((FormPair)categories.getItemAtPosition(index)).get("id");
 
         if (item.getItemId() == CATEGORY_EDIT) {
             Intent intent = new Intent(this, CategoryForm.class);
@@ -93,6 +101,13 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Ada
                                 }
                             })
                     .setNegativeButton("No", null).show();
+        }
+        else if (item.getItemId() == CATEGORY_HISTORY) {
+            Intent intent = new Intent(this, SpendingHistoryList.class);
+
+            intent.putExtra("id", id);
+
+            startActivity(intent);
         }
         return true;
     }

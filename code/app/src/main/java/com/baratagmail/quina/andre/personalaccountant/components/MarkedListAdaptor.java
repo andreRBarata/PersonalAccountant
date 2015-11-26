@@ -17,6 +17,8 @@ import java.util.TreeMap;
 
 /**
  * Created by andre on 08-11-2015.
+ *
+ * Used to fill the categories for the Main activity
  */
 public class MarkedListAdaptor extends ArrayAdapter<TreeMap<String,String>> {
     public MarkedListAdaptor(Context context) {

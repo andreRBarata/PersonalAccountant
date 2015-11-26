@@ -1,77 +1,67 @@
 package com.baratagmail.quina.andre.personalaccountant;
 
-import android.app.ActionBar;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.database.Cursor;
-import android.database.DataSetObserver;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.Gallery;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import com.baratagmail.quina.andre.personalaccountant.components.FormPair;
 import com.baratagmail.quina.andre.personalaccountant.database.DBManager;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.TreeMap;
 
 /**
  * Created by andre on 17-11-2015.
+ *
+ * Allows the creation and edition of categories
  */
 public class CategoryForm extends AppCompatActivity implements View.OnClickListener {
     private String id;
-    private EditText category_name;
-    private EditText category_budget;
-    private String category_imagepath;
-    private Spinner counting_period;
-    private ImageView category_image;
+    private EditText categoryName;
+    private EditText categoryBudget;
+    private String categoryImagepath;
+    private Spinner countingPeriod;
+    private ImageView categoryImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category_form);
 
-        Button category_save = (Button) findViewById(R.id.category_save);
-        Button category_delete = (Button) findViewById(R.id.category_cancel);
-        category_image = (ImageView) findViewById(R.id.category_image);
+        Button categorySave = (Button) findViewById(R.id.category_save);
+        Button categoryDelete = (Button) findViewById(R.id.category_cancel);
+        categoryImage = (ImageView) findViewById(R.id.category_image);
 
-        category_imagepath = "image";
+        categoryImagepath = "image";
 
-        category_name = (EditText)
+        categoryName = (EditText)
                 findViewById(R.id.category_name);
-        category_budget = (EditText)
-                findViewById(R.id.category_budget);;
-        counting_period = (Spinner)
+        categoryBudget = (EditText)
+                findViewById(R.id.category_budget);
+        countingPeriod = (Spinner)
                 findViewById(R.id.counting_period);
 
 
-        category_save.setOnClickListener(this);
-        category_delete.setOnClickListener(this);
-        category_image.setOnClickListener(this);
+        categorySave.setOnClickListener(this);
+        categoryDelete.setOnClickListener(this);
+        categoryImage.setOnClickListener(this);
 
         ArrayAdapter<FormPair> counts =
                 new ArrayAdapter<FormPair>(
-                        counting_period.getContext(),
+                        countingPeriod.getContext(),
                         android.R.layout.simple_spinner_dropdown_item
                 );
 
-
+        //Setting counting periods from java Calendar magic numbers
         counts.addAll(
             new FormPair(
                     "id", String.valueOf(Calendar.DAY_OF_WEEK),
@@ -87,7 +77,7 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
             )
         );
 
-        counting_period.setAdapter(counts);
+        countingPeriod.setAdapter(counts);
 
         //Adding values for edit mode
         if (getIntent().getStringExtra("id") != null) {
@@ -100,35 +90,36 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
             db.open();
 
             cursor = db.select("Category",
-                    new String[]{"name", "budget", "counting_period", "image_path"},
+                    new String[]{"name", "current_budget", "counting_period", "image_path"},
                     "id = ?",
                     Arrays.asList(id)
             );
 
 
-            category_name.setText(cursor.getString(0));
-            category_budget.setText(
+            categoryName.setText(cursor.getString(0));
+            categoryBudget.setText(
                     String.valueOf(cursor.getFloat(1))
             );
 
-            while (count < counting_period.getCount()) {
-                FormPair item = (FormPair)counting_period
+            while (count < countingPeriod.getCount()) {
+                FormPair item = (FormPair) countingPeriod
                         .getItemAtPosition(count);
 
-                if (item.get("id") == String.valueOf(cursor.getInt(2))) {
+                if (item.get("id").equals(String.valueOf(cursor.getInt(2)))) {
                     break;
                 }
 
                 count++;
             }
 
-            if (count < counting_period.getCount()) {
-                counting_period.setSelection(count);
+            if (count < countingPeriod.getCount()) {
+                countingPeriod.setSelection(count);
             }
 
+            //If image if not empty
             if (!cursor.isNull(3) && !cursor.getString(3).isEmpty()) {
-                category_imagepath = cursor.getString(3);
-                category_image.setImageResource(
+                categoryImagepath = cursor.getString(3);
+                categoryImage.setImageResource(
                         getResources().getIdentifier(cursor.getString(3),
                                 "drawable",
                                 getPackageName()
@@ -151,17 +142,17 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
             ContentValues values = new ContentValues();
 
             values.put("name",
-                    category_name.getText().toString()
+                    categoryName.getText().toString()
             );
-            values.put("budget",
-                    category_budget.getText().toString()
+            values.put("current_budget",
+                    categoryBudget.getText().toString()
             );
             values.put("image_path",
-                    category_imagepath
+                    categoryImagepath
             );
             values.put("counting_period",
                     ((FormPair)
-                            counting_period.getSelectedItem()
+                            countingPeriod.getSelectedItem()
                     ).get("id")
             );
 
@@ -193,7 +184,7 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
             layout.setColumnCount(4);
 
 
-
+            //Images from: https://www.google.com/design/icons/index.html
             for (final String icon: getResources().getStringArray(R.array.icons)) {
                 ImageView view = new ImageView(layout.getContext());
                 final int resource = getResources().getIdentifier(icon,
@@ -208,14 +199,15 @@ public class CategoryForm extends AppCompatActivity implements View.OnClickListe
                 view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            category_image.setImageResource(resource);
-                            category_imagepath = icon;
+                            categoryImage.setImageResource(resource);
+                            categoryImagepath = icon;
                         }
                     }
                 );
 
                 layout.addView(view);
             }
+
 
             new AlertDialog.Builder(this).setView(layout)
                     .setPositiveButton(R.string.ok, null).show();

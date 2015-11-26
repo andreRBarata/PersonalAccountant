@@ -30,6 +30,8 @@ import java.util.Date;
 
 /**
  * Created by andre on 15-11-2015.
+ *
+ * Allows the users to photograph and save a new receipt
  */
 public class ReceiptForm extends AppCompatActivity implements View.OnClickListener {
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -109,13 +111,14 @@ public class ReceiptForm extends AppCompatActivity implements View.OnClickListen
             Date next_reset;
             boolean newCycle = false;
 
-
+            //Folder for receipts is created (is it doesn't exist)
             File folder = new File(
                     getExternalFilesDir(null) + File.separator + "receipts"
             );
 
             folder.mkdir();
 
+            //Photo is stored with a timestamp for a name
             File file = new File(
                     folder,
                     (System.currentTimeMillis()) + ".jpg"
@@ -129,26 +132,30 @@ public class ReceiptForm extends AppCompatActivity implements View.OnClickListen
 
             ContentValues queryValues = new ContentValues();
 
+            if (photo != null) {
+                //Saving photo
+                try {
+                    OutputStream fOut = new FileOutputStream(file);
+                    photo.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
 
-            //Saving photo
-            try {
-                OutputStream fOut = new FileOutputStream(file);
-                photo.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+                    fOut.flush();
+                    fOut.close();
+                } catch (Exception e) {
+                    Toast.makeText(this,
+                            R.string.sdcard_error,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
 
-                fOut.flush();
-                fOut.close();
-            } catch (Exception e) {
-                Toast.makeText(this,
-                        R.string.sdcard_error,
-                        Toast.LENGTH_SHORT
-                ).show();
+                queryValues.put("image_path", file.getPath());
             }
+
+            queryValues.put("category_id", category_id);
+            queryValues.put("cost", cost.getText().toString());
 
             db.open();
 
-            queryValues.put("image_path", file.getPath());
-            queryValues.put("category_id", category_id);
-            queryValues.put("cost", cost.getText().toString());
+
 
             //Saving Receipt
             db.insert("Receipt", queryValues);
@@ -158,6 +165,7 @@ public class ReceiptForm extends AppCompatActivity implements View.OnClickListen
                     Arrays.asList(category_id)
             );
 
+            //Checks for category reset
             try {
                 newCycle = db.updateCategory(category_id);
             }
@@ -165,6 +173,7 @@ public class ReceiptForm extends AppCompatActivity implements View.OnClickListen
                 Toast.makeText(this, "Internal Error", Toast.LENGTH_LONG);
             }
 
+            //If the category was reset or is new inicialize its begin and end dates
             if (cursor.isNull(0) || newCycle) {
                 ContentValues values = new ContentValues();
                 int counting_period = cursor.getInt(1);

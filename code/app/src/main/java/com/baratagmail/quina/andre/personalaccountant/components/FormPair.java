@@ -4,6 +4,9 @@ import java.util.TreeMap;
 
 /**
  * Created by andre on 15-11-2015.
+ *
+ * Custom TreeMap make to be easier to initialize and
+ * be usable in spinners (the toString returns a specific string to display)
  */
 public class FormPair extends TreeMap<String,String> {
 

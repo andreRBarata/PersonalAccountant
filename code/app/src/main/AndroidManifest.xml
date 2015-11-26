@@ -30,6 +30,10 @@
             android:name=".CategoryView"
             android:label="@string/category" >
         </activity>
+        <activity
+            android:name=".SpendingHistoryList"
+            android:label="@string/category" >
+        </activity>
     </application>
 
 </manifest>

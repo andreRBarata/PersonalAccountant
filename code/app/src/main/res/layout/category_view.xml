@@ -8,34 +8,46 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/category_panel">
-        <TextView
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/category_budget" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/category_spent"
-            android:layout_below="@+id/category_budget"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/category_tally"
-            android:layout_below="@+id/category_spent"/>
+            android:layout_centerVertical="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/list_font"
+                android:id="@+id/category_budget" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/list_font"
+                android:id="@+id/category_spent"
+                android:layout_below="@+id/category_budget"/>
+        </RelativeLayout>
+
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:maxHeight="25dp"
             android:id="@+id/category_image"
             />
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/category_panel"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/category_tally"/>
+
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/category_panel"
+        android:layout_below="@+id/category_tally"
         android:id="@+id/receipts">
     </ListView>
 </RelativeLayout>
